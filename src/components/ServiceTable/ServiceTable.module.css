@@ -1,0 +1,241 @@
+.container {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--light-border); /* Usando sua variável existente */
+  overflow: hidden; /* Para os cantos arredondados da tabela */
+  margin: 16px;
+  overflow-x: auto; /* Responsividade horizontal */
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.thead {
+  background-color: #f9fafb;
+  border-bottom: 1px solid var(--light-border);
+}
+
+.th {
+  padding: 16px 24px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--secondary-text); /* Usando sua variável */
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.row {
+  transition: background-color 0.2s;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.row:hover {
+  background-color: #f9fafb;
+}
+
+.cell {
+  padding: 16px 24px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* Tipografias específicas */
+.idText {
+  font-weight: 700;
+  color: var(--primary-text);
+}
+
+.dateText {
+  font-size: 0.875rem;
+  color: var(--secondary-text);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--primary-text);
+}
+
+.description {
+  font-size: 0.875rem;
+  color: var(--secondary-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 20ch;
+}
+
+.categoryTag {
+  font-size: 0.75rem;
+  color: var(--primary-blue);
+  background-color: var(--light-bg-blue);
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 4px;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+/* Badges de Status */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+}
+
+.statusPendente {
+  background-color: #fef3c7;
+  color: #92400e;
+  border-color: #fde68a;
+}
+
+.statusEmAndamento { /* Ajustei o nome para corrigir o typo do exemplo 'Em Anamento' */
+  background-color: var(--light-bg-blue);
+  color: #1e40af;
+  border-color: #bfdbfe;
+}
+
+.statusConcluido {
+  background-color: var(--light-bg-green);
+  color: #166534;
+  border-color: #86efac;
+}
+
+/* Badges de Prioridade */
+.priorityBaixa { color: var(--primary-green); font-weight: 600; }
+.priorityMedia { color: var(--primary-orange); font-weight: 600; }
+.priorityAlta { color: #ea580c; font-weight: 600; }
+.priorityCritica { color: #dc2626; font-weight: 700; }
+
+.actionButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--secondary-text);
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.actionButton:hover {
+  background-color: var(--light-bg-blue);
+  color: var(--primary-blue);
+}
+
+
+/* ... Mantenha todo o seu CSS anterior aqui ... */
+
+
+/* --- RESPONSIVIDADE (Transforma Tabela em Cards) --- */
+
+@media (max-width: 768px) {
+  .thead {
+    display: none; /* Esconde o cabeçalho da tabela no mobile */
+  }
+
+  .table, .tbody, .row, .cell {
+    display: block; /* Remove o comportamento padrão de tabela */
+    width: 100%;
+  }
+
+  .row {
+    background-color: #fff;
+    border: 1px solid var(--light-border);
+    border-radius: 8px;
+    margin-bottom: 16px; /* Espaço entre os "cards" */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    padding: 12px;
+    position: relative; /* Para posicionar o botão de ação */
+  }
+
+  /* Remove a borda padrão de baixo e o hover do desktop */
+  .row:last-child {
+    border-bottom: 1px solid var(--light-border);
+  }
+
+  .cell {
+    padding: 6px 0; /* Reduz espaçamento interno */
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  /* Agrupa Status e Prioridade visualmente */
+  .cell {
+    border-bottom: none; /* Remove linhas internas excessivas */
+  }
+
+  /* Dá destaque ao Título (segunda célula) */
+  .cell:nth-child(2) {
+    order: -1; /* Joga o título para o topo do card */
+    margin-bottom: 8px;
+    border-bottom: 1px solid #f3f4f6;
+    padding-bottom: 12px;
+  }
+
+  /* ID e Data */
+  .cell:nth-child(1) {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+  }
+
+  .cell:last-child {
+    border-bottom: none;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: auto;
+    padding: 0;
+  }
+
+  /* Ajustes específicos para os conteúdos no mobile */
+  
+  /* Permite que a descrição quebre linha e apareça completa */
+  .description {
+    white-space: normal; 
+    max-width: 100%;
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* Deixa o ID e Data lado a lado ou ajustados */
+  .dateText {
+    margin-top: 2px;
+    font-size: 0.8rem;
+  }
+
+  /* Ajusta o layout das badges para não ocuparem a linha toda sozinhas */
+  .cell:nth-child(4), /* Prioridade */
+  .cell:nth-child(5) { /* Status */
+    display: inline-block;
+    width: auto;
+    border-bottom: none;
+    padding-top: 12px;
+    padding-right: 12px;
+  }
+  
+  /* Oculta os labels vazios se houver */
+  .cell:empty {
+    display: none;
+  }
+}
