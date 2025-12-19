@@ -1,0 +1,44 @@
+.container{
+  background-color: #fff;
+  padding: 24px 16px;
+  border: solid 2px var(--light-border);
+  border-radius: 10px;
+  margin: 0px 8px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: auto;
+  min-width: fit-content;
+}
+
+.searchContainer{
+  border-radius: 10px;
+  border: solid 2px var(--light-border);
+  display: flex;
+  align-items: center;
+  padding: 1vh;
+  gap: 0.5rem;
+  width: fit-content;
+}
+
+.searchInput{
+  font-size: 1rem;
+  border: none;
+  max-width: 32ch;
+}
+
+.filtersContainer{
+ display: flex;
+ gap: 8px;
+ margin-right: 10px; 
+}
+
+.filter{
+  padding:12px 30px;
+  border: none;
+  font-size: medium;
+  border-radius: 20px;
+  background-color: var(--light-bg-blue);
+  color: #444444;
+  width: fit-content;
+}

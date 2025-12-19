@@ -1,0 +1,26 @@
+:root{
+  --bg-color:#F9FAFB;
+
+  --primary-text: #000000;
+  --secondary-text: #757575;
+
+  --primary-blue: #0088FF;
+  --primary-orange: #FF8D28;
+  --primary-indigo: #6155F5;
+  --primary-green: #34C759;
+  
+  --light-bg-blue: #D4EBFF;
+  --light-bg-orange: #FFE1C7;
+  --light-bg-indigo: #DAD7FF;
+  --light-bg-green: #CCFFD8;
+
+  --light-border: #DFE2E6;
+}
+*{
+  margin: 0;
+}
+body {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400; /* peso padrão */
+  background-color: var(--bg-color);
+}

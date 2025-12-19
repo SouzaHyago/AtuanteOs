@@ -1,0 +1,40 @@
+
+.avatar{
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.info{
+  display: flex;
+  flex-direction: column;
+  
+}
+
+@media (max-width: 400px){
+  
+  .info{
+    display: none;
+  }
+
+}
+
+.name{
+  margin: 0;
+  font-size: large;
+  font-weight: 500;
+  color: var(--primary-text);
+}
+.position{
+  font-size: large;
+  font-weight: 500;
+  margin: 0;
+  color: var(--secondary-text);
+}
+
+.image{
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+}
