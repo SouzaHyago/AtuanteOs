@@ -6,9 +6,10 @@
   margin: 0px 8px;
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
+
   width: auto;
-  min-width: fit-content;
+  flex-wrap: wrap; 
+  gap: 16px;
 }
 
 .searchContainer{
@@ -18,19 +19,25 @@
   align-items: center;
   padding: 1vh;
   gap: 0.5rem;
-  width: fit-content;
+
+  flex-grow: 0.25;
+  width: 100%;
 }
 
 .searchInput{
   font-size: 1rem;
   border: none;
-  max-width: 32ch;
+  width: 100%;
 }
 
 .filtersContainer{
- display: flex;
- gap: 8px;
- margin-right: 10px; 
+  display: flex;
+  gap: 8px;
+  margin-right: 10px; 
+  overflow-x: auto; /*scroll horizontal nos botões se necessário */
+  padding-bottom: 4px; /* Espaço para o scrollbar não colar */
+  width: 100%;
+  scrollbar-width: none; 
 }
 
 .filter{
@@ -41,4 +48,11 @@
   background-color: var(--light-bg-blue);
   color: #444444;
   width: fit-content;
+}
+
+
+@media (min-width: 768px) {
+  .searchContainer, .filtersContainer {
+    width: auto;
+  }
 }

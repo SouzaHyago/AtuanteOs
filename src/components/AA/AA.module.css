@@ -1,11 +1,15 @@
-
 .container{
   display: flex;
-  align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   margin: 8px 16px;
 
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  margin: 16px;
 }
 
 .phrase{
@@ -14,7 +18,7 @@
 }
 
 .title{
-  font-size: xx-large;
+  font-size: clamp(1.5rem, 4vw, 2rem); 
   font-weight: 600;
   color: var(--primary-text);
 }
@@ -28,8 +32,24 @@
   border-radius: 5px;
   padding: 16px 16px 16px 8px;
   border: none;
-  font-size: 1.2rem;
+  font-size: 1rem; 
   font-weight: 600;
   color: #fff;
   background-color: var(--primary-blue);
+
+  width: 100%;
+  text-align: center;
+}
+
+/* Ajuste para Desktop */
+@media (min-width: 600px) {
+  .container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .button {
+    width: auto;
+  }
 }

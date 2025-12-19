@@ -6,14 +6,26 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  
-  min-width: 16%;
+  flex-grow: 1; 
+
+  width: 100%; 
+  min-width: 250px;
   border-radius: 10px;
 
-  margin: 32px;
+  margin: 0; 
   padding: 32px;
 
 }
+
+
+/* Telas de tablet/desktop */
+@media (min-width: 768px) {
+  .card {
+    width: 20%; 
+    max-width: 300px;
+  }
+}
+
 
 .info{
   display: flex;
@@ -23,11 +35,11 @@
 
 .title{
   font-weight: 600;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 .value{
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 1.8rem;
 }
 .icon{
   width: 52px;
