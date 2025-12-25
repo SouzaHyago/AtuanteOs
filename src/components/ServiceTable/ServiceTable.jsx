@@ -7,9 +7,9 @@ export default function ServiceTable({ orders }) {
   const getStatusClass = (status) => {
     switch (status) {
       case 'Pendente': return styles.statusPendente;
-      case 'Em Anamento': return styles.statusEmAndamento; // Mantive o typo do mock original se necessário
+      case 'Em Anamento': return styles.statusEmAndamento;
       case 'Em Andamento': return styles.statusEmAndamento;
-      case 'Concluído': return styles.statusConcluido;
+      case 'Retirada': return styles.statusRetirada;
       default: return '';
     }
   };

@@ -2,10 +2,10 @@
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  border: 1px solid var(--light-border); /* Usando sua variável existente */
-  overflow: hidden; /* Para os cantos arredondados da tabela */
+  border: 1px solid var(--light-border);
+  overflow: hidden;
   margin: 16px;
-  overflow-x: auto; /* Responsividade horizontal */
+  overflow-x: auto;
 }
 
 .table {
@@ -23,7 +23,7 @@
   padding: 16px 24px;
   font-size: 0.75rem;
   text-transform: uppercase;
-  color: var(--secondary-text); /* Usando sua variável */
+  color: var(--secondary-text);
   font-weight: 600;
   letter-spacing: 0.05em;
 }
@@ -107,13 +107,13 @@
   border-color: #fde68a;
 }
 
-.statusEmAndamento { /* Ajustei o nome para corrigir o typo do exemplo 'Em Anamento' */
+.statusEmAndamento {
   background-color: var(--light-bg-blue);
   color: #1e40af;
   border-color: #bfdbfe;
 }
 
-.statusConcluido {
+.statusRetirada {
   background-color: var(--light-bg-green);
   color: #166534;
   border-color: #86efac;
@@ -141,10 +141,7 @@
 }
 
 
-/* ... Mantenha todo o seu CSS anterior aqui ... */
-
-
-/* --- RESPONSIVIDADE (Transforma Tabela em Cards) --- */
+/*(Transforma Tabela em Cards) --- */
 
 @media (max-width: 768px) {
   .thead {
@@ -152,7 +149,7 @@
   }
 
   .table, .tbody, .row, .cell {
-    display: block; /* Remove o comportamento padrão de tabela */
+    display: block; 
     width: 100%;
   }
 
@@ -160,7 +157,7 @@
     background-color: #fff;
     border: 1px solid var(--light-border);
     border-radius: 8px;
-    margin-bottom: 16px; /* Espaço entre os "cards" */
+    margin-bottom: 16px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     padding: 12px;
     position: relative; /* Para posicionar o botão de ação */

@@ -40,16 +40,28 @@
   scrollbar-width: none; 
 }
 
-.filter{
-  padding:12px 30px;
+.filter {
+  padding: 12px 30px;
   border: none;
   font-size: medium;
   border-radius: 20px;
   background-color: var(--light-bg-blue);
   color: #444444;
   width: fit-content;
+  cursor: pointer;          /* Adicionado para melhor UX */
+  transition: all 0.2s;     /* Adicionado para suavizar a troca de cor */
 }
 
+.filter:hover {
+  filter: brightness(0.95); /* Efeito opcional de hover */
+}
+
+/* NOVA CLASSE PARA O BOTÃO ATIVO */
+.active {
+  background-color: var(--primary-indigo);
+  color: #ffffff; /* Texto branco para contraste com indigo */
+  font-weight: 600; /* Opcional: deixar negrito */
+}
 
 @media (min-width: 768px) {
   .searchContainer, .filtersContainer {
