@@ -1,32 +1,25 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./ServiceTable.module.css";
-import { Calendar, ChevronRight, Key } from 'lucide-react';
+import { Calendar, ChevronRight } from 'lucide-react';
 
 export default function ServiceTable({ orders }) {
   
-  const [statusModal, setStatusModal] = useState(false)
-  let otherStatus;
+  const [openedStatusId, setOpenedStatusId] = useState(null);
 
   // Helpers para classes dinâmicas
   const getStatusClass = (status) => {
     switch (status) {
-      case 'Pendente':
-        otherStatus = ['Em Andamento', 'Retirada'];
-        return styles.statusPendente;
-        case 'Em Andamento': 
-          otherStatus = ['Pendente', 'Retirada'];
-          return styles.statusEmAndamento;
-        case 'Retirada': 
-          otherStatus = ['Em Andamento', 'Pendente'];
-          return styles.statusRetirada;
+      case 'Pendente': return styles.statusPendente;
+        case 'Em Andamento': return styles.statusEmAndamento;
+        case 'Retirada': return styles.statusRetirada;
       default: return '';
     }
   };
+  const getOtherStatus = (currentStatus)=> {
+    const allStatus = ['Pendente','Em Andamento','Retirada']
+    return allStatus.filter( s => s !== currentStatus);
+  }
 
-  useEffect (()=>{
-
-  },[])
-  
 
   const getPriorityClass = (priority) => {
     switch (priority) {
@@ -38,6 +31,10 @@ export default function ServiceTable({ orders }) {
     }
   };
 
+  const toggleStatus = (id)=> {
+    setOpenedStatusId(prevId => prevId === id ? null : id)
+  }
+
   if (!orders || orders.length === 0) {
     return (
       <div className={styles.container} style={{ textAlign: 'center', padding: '48px' }}>
@@ -46,8 +43,12 @@ export default function ServiceTable({ orders }) {
     );
   }
 
-  function handleStatusClick(e){
-    console.log(e);
+  function handleStatusClick(id){
+    if(id === openedStatusId){
+      return 0;
+    }else {
+      return 1;
+    }
   }
 
   return (
@@ -99,13 +100,13 @@ export default function ServiceTable({ orders }) {
 
               {/* Status */}
               <td className={styles.cell} >
-                <span onClick={setStatusModal(false)} className={`${styles.statusBadge} ${getStatusClass(order.status)}`}>
+                <span onClick={(()=>toggleStatus(order.id))} className={`${styles.statusBadge} ${getStatusClass(order.status)}`}>
                   {order.status}
                 </span>
-                <div hidden={statusModal}>
+                <div hidden={handleStatusClick(order.id)}>
                   <div className={styles.statusModal}>
-                    {otherStatus.map((newStatus)=> (
-                      <span key={newStatus} onClick={setStatusModal(true)} className={`${styles.statusBadge} ${getStatusClass(newStatus)}`}>
+                    {getOtherStatus(order.status).map((newStatus)=> (
+                      <span onClick={(()=>setOpenedStatusId(null))} key={newStatus} className={`${styles.statusBadge} ${getStatusClass(newStatus)}`}>
                         {newStatus}
                       </span>
                     ))}
