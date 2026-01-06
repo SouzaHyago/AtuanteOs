@@ -20,63 +20,53 @@ export default function App() {
   const mockOrders = [
     {
       id: 'OS-2024-001',
-      title: 'Manutenção de Ar Condicionado',
-      description: 'Aparelho do setor financeiro pingando e fazendo barulho.',
-      location: 'Bloco B - Sala 204',
+      title: 'Ar Condicionado Xinix',
+      description: 'Está deixando o ar gelado',
       date: '2024-10-28',
       status: 'Em Andamento',
       priority: 'Alta',
-      category: 'Climatização'
+      client: 'Billy',
+      category: 'R$250,00'
     },
     {
       id: 'OS-2024-002',
-      title: 'Troca de Lâmpada Queimada',
-      description: 'Lâmpada do corredor principal piscando intermitentemente.',
-      location: 'Corredor Térreo',
+      title: 'Luminária',
+      description: 'Lâmpada piscando intermitentemente.',
       date: '2024-10-29',
       status: 'Pendente',
       priority: 'Baixa',
-      category: 'Elétrica'
+      client: 'Otto',
+      category: 'R$180'
     },
     {
       id: 'OS-2024-003',
-      title: 'Vazamento na Copa',
-      description: 'Torneira da pia não fecha completamente, desperdício de água.',
-      location: 'Copa - 2º Andar',
+      title: 'Microondas',
+      description: 'Prato não gira',
       date: '2024-10-25',
       status: 'Retirada',
       priority: 'Média',
-      category: 'Hidráulica'
+      client: 'Léo',
+      category: 'R$80'
     },
     {
       id: 'OS-2024-004',
-      title: 'Sem conexão de Internet',
-      description: 'Ponto de rede R-45 danificado, cabo rompido.',
-      location: 'Sala de Reuniões 1',
+      title: 'Televisão Phillips',
+      description: 'Deslinga depois de um tempo ligada',
       date: '2024-10-30',
       status: 'Pendente',
-      priority: 'Crítica',
-      category: 'TI / Redes'
+      priority: 'Baixa',
+      client: 'Bardot',
+      category: 'Sem orçamento'
     },
     {
       id: 'OS-2024-005',
-      title: 'Porta emperrada',
-      description: 'A porta de vidro da entrada está travando ao abrir.',
-      location: 'Recepção',
+      title: 'Som AIWA',
+      description: 'Som baixo',
       date: '2024-10-27',
-      status: 'Retirada',
-      priority: 'Alta',
-      category: 'Predial'
-    },
-    {
-      id: 'OS-2024-006',
-      title: 'Instalação de Projetor',
-      description: 'Instalar novo projetor comprado para o auditório.',
-      location: 'Auditório Principal',
-      date: '2024-11-01',
-      status: 'Em Andamento',
-      priority: 'Média',
-      category: 'TI / Infra'
+      status: 'Pendente',
+      priority: 'Baixa',
+      client: 'Brigitte',
+      category: 'Sem Orçamento'
     }
   ];
 
@@ -84,7 +74,8 @@ export default function App() {
     const matchesSearch = 
       order.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       order.id.toLowerCase().includes(searchTerm.toLowerCase()) || 
-      order.description.toLowerCase().includes(searchTerm.toLowerCase());
+      order.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.client.toLowerCase().includes(searchTerm.toLowerCase());
 
     if (!matchesSearch) return false;
 

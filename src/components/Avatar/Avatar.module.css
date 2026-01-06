@@ -21,12 +21,12 @@
 
 .name{
   margin: 0;
-  font-size: large;
+  font-size: 1.2rem;
   font-weight: 500;
   color: var(--primary-text);
 }
 .position{
-  font-size: large;
+  font-size: 1.2rem;
   font-weight: 500;
   margin: 0;
   color: var(--secondary-text);
@@ -34,7 +34,7 @@
 
 .image{
   border-radius: 50%;
-  width: 64px;
-  height: 64px;
+  width: 56px;
+  height: 56px;
   object-fit: cover;
 }

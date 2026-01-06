@@ -1,18 +1,32 @@
+import { useEffect, useState } from "react";
 import styles from "./ServiceTable.module.css";
-import { Calendar, MapPin, ChevronRight, Search } from 'lucide-react'; // Instale: npm install lucide-react
+import { Calendar, ChevronRight, Key } from 'lucide-react';
 
 export default function ServiceTable({ orders }) {
   
+  const [statusModal, setStatusModal] = useState(false)
+  let otherStatus;
+
   // Helpers para classes dinâmicas
   const getStatusClass = (status) => {
     switch (status) {
-      case 'Pendente': return styles.statusPendente;
-      case 'Em Anamento': return styles.statusEmAndamento;
-      case 'Em Andamento': return styles.statusEmAndamento;
-      case 'Retirada': return styles.statusRetirada;
+      case 'Pendente':
+        otherStatus = ['Em Andamento', 'Retirada'];
+        return styles.statusPendente;
+        case 'Em Andamento': 
+          otherStatus = ['Pendente', 'Retirada'];
+          return styles.statusEmAndamento;
+        case 'Retirada': 
+          otherStatus = ['Em Andamento', 'Pendente'];
+          return styles.statusRetirada;
       default: return '';
     }
   };
+
+  useEffect (()=>{
+
+  },[])
+  
 
   const getPriorityClass = (priority) => {
     switch (priority) {
@@ -32,6 +46,10 @@ export default function ServiceTable({ orders }) {
     );
   }
 
+  function handleStatusClick(e){
+    console.log(e);
+  }
+
   return (
     <div className={styles.container}>
       <table className={styles.table}>
@@ -39,7 +57,7 @@ export default function ServiceTable({ orders }) {
           <tr>
             <th className={styles.th}>ID / Data</th>
             <th className={styles.th}>Detalhes da Solicitação</th>
-            <th className={styles.th}>Local</th>
+            <th className={styles.th}>Cliente</th>
             <th className={styles.th}>Prioridade</th>
             <th className={styles.th}>Status</th>
             <th className={`${styles.th} text-right`}>Ação</th>
@@ -65,11 +83,10 @@ export default function ServiceTable({ orders }) {
                 <span className={styles.categoryTag}>{order.category}</span>
               </td>
 
-              {/* Localização */}
+              {/* Nome do CLiente */}
               <td className={styles.cell}>
-                <div className={styles.location}>
-                  <MapPin size={14} />
-                  {order.location}
+                <div className={styles.client}>
+                  {order.client}
                 </div>
               </td>
 
@@ -81,10 +98,20 @@ export default function ServiceTable({ orders }) {
               </td>
 
               {/* Status */}
-              <td className={styles.cell}>
-                <span className={`${styles.statusBadge} ${getStatusClass(order.status)}`}>
+              <td className={styles.cell} >
+                <span onClick={setStatusModal(false)} className={`${styles.statusBadge} ${getStatusClass(order.status)}`}>
                   {order.status}
                 </span>
+                <div hidden={statusModal}>
+                  <div className={styles.statusModal}>
+                    {otherStatus.map((newStatus)=> (
+                      <span key={newStatus} onClick={setStatusModal(true)} className={`${styles.statusBadge} ${getStatusClass(newStatus)}`}>
+                        {newStatus}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                
               </td>
 
               {/* Ação */}

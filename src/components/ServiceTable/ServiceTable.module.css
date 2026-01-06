@@ -82,7 +82,7 @@
   margin-top: 4px;
 }
 
-.location {
+.client {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -99,7 +99,22 @@
   font-size: 0.75rem;
   font-weight: 500;
   border: 1px solid transparent;
+  cursor: pointer;
+  position: relative;
 }
+
+.statusModal{
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px;
+  border-radius: 5px;  
+  position: absolute;
+  z-index: 100;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
 
 .statusPendente {
   background-color: #fef3c7;
