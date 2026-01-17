@@ -103,16 +103,23 @@
   position: relative;
 }
 
-.statusModal{
-  width: fit-content;
+.relativeCell {
+  position: relative;
+}
+
+.statusModal {
+  width: max-content;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 4px;
-  border-radius: 5px;  
+  padding: 8px;
+  background-color: white;
+  border-radius: 8px;  
   position: absolute;
+  top: 70%;
+  left: 24px;
   z-index: 100;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e7eb;
 }
 
 
@@ -139,6 +146,47 @@
 .priorityMedia { color: var(--primary-orange); font-weight: 600; }
 .priorityAlta { color: #ea580c; font-weight: 600; }
 .priorityCritica { color: #dc2626; font-weight: 700; }
+
+/* Torna o badge de prioridade clicável */
+.priorityBadge {
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  display: inline-block;
+}
+
+.priorityBadge:hover {
+  background-color: #f3f4f6;
+}
+
+/* Modal de Prioridade */
+.priorityModal {
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  background-color: white;
+  border-radius: 8px;  
+  position: absolute;
+  top: 70%;
+  left: 20px;
+  z-index: 101; /* Garante que fica sobre tudo */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.priorityOption {
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.priorityOption:hover {
+  background-color: #f9fafb;
+}
 
 .actionButton {
   background: none;

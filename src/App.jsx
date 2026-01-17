@@ -1,4 +1,4 @@
-import { useState } from 'react' //
+import { useState } from 'react'
 import Header from "./components/Header"
 import AA from "./components/AA"
 import InfoCard from "./components/InfoCard"
@@ -13,11 +13,10 @@ import andamento from "./assets/clock.svg"
 import retirada from "./assets/check_icon.svg"
 
 export default function App() {
-
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('Todos');
 
-  const mockOrders = [
+  const [orders, setOrders] = useState([
     {
       id: 'OS-2024-001',
       title: 'Ar Condicionado Xinix',
@@ -68,9 +67,28 @@ export default function App() {
       client: 'Brigitte',
       category: 'Sem Orçamento'
     }
-  ];
+  ]);
 
-  const filteredOrders = mockOrders.filter((order) => {
+  // --- FUNÇÃO PARA SALVAR O NOVO STATUS ---
+  const handleUpdateStatus = (id, newStatus) => {
+    setOrders(prevOrders => 
+      prevOrders.map(order => 
+        order.id === id ? { ...order, status: newStatus } : order
+      )
+    );
+    // Nota: Se tivesse um banco de dados, o "fetch" ou "axios" entraria aqui.
+  };
+
+  const handleUpdatePriority = (id, newPriority) => {
+  setOrders(prevOrders => 
+    prevOrders.map(order => 
+      order.id === id ? { ...order, priority: newPriority } : order
+    )
+  );
+  } ;
+
+  // Filtragem agora usa o estado 'orders' em vez de 'mockOrders'
+  const filteredOrders = orders.filter((order) => {
     const matchesSearch = 
       order.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       order.id.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -80,7 +98,6 @@ export default function App() {
     if (!matchesSearch) return false;
 
     if (filterStatus === 'Todos') return true;
-    
     if (filterStatus === 'Pendentes' && order.status === 'Pendente') return true;
     if (filterStatus === 'Em andamento' && order.status === 'Em Andamento') return true;
     if (filterStatus === 'Retirada' && order.status === 'Retirada') return true;
@@ -88,53 +105,42 @@ export default function App() {
     return false;
   });
 
-  const countPendentes = mockOrders.filter(o => o.status === 'Pendente').length;
-  const countEmAndamento = mockOrders.filter(o => o.status === 'Em Andamento').length;
-  const countConcluidas = mockOrders.filter(o => o.status === 'Retirada').length;
-  
+  // Contadores atualizados conforme o estado muda
+  const countPendentes = orders.filter(o => o.status === 'Pendente').length;
+  const countEmAndamento = orders.filter(o => o.status === 'Em Andamento').length;
+  const countConcluidas = orders.filter(o => o.status === 'Retirada').length;
   const countAbertas = countPendentes + countEmAndamento;
- return(
-  <>
-    <Header
-      title={"Portal de Serviços"} 
-      image={rea}
-      name={"Otto Souza"}
-      position={"Captão"}
-    />
 
-    <AA />
+  return(
+    <>
+      <Header
+        title={"Portal de Serviços"} 
+        image={rea}
+        name={"Otto Souza"}
+        position={"Captão"}
+      />
 
-    <div className={styles.cards}>
-        <InfoCard 
-          title={"Ordens Abertas"}
-          value={countAbertas} 
-          icon={aberta}
-        />
-        <InfoCard 
-          title={"Pendentes"}
-          value={countPendentes}
-          icon={pendente}
-        />
-        <InfoCard 
-          title={"Em Andamento"}
-          value={countEmAndamento}
-          icon={andamento}
-        />
-        <InfoCard 
-          title={"Aguardando Retirada"}
-          value={countConcluidas}
-          icon={retirada}
-        />
+      <AA />
+
+      <div className={styles.cards}>
+          <InfoCard title={"Ordens Abertas"} value={countAbertas} icon={aberta} />
+          <InfoCard title={"Pendentes"} value={countPendentes} icon={pendente} />
+          <InfoCard title={"Em Andamento"} value={countEmAndamento} icon={andamento} />
+          <InfoCard title={"Aguardando Retirada"} value={countConcluidas} icon={retirada} />
       </div>
 
-    <SearchBar 
-      onSearch={setSearchTerm} 
-      onFilter={setFilterStatus} 
-      filterStatus={filterStatus}
-    />
-    <ServiceTable 
-      orders={filteredOrders}
-    />
-  </>
- )
+      <SearchBar 
+        onSearch={setSearchTerm} 
+        onFilter={setFilterStatus} 
+        filterStatus={filterStatus}
+      />
+      
+      {/* MUDANÇA AQUI: Passamos a função handleUpdateStatus para a tabela */}
+     <ServiceTable 
+  orders={filteredOrders}
+  onUpdateStatus={handleUpdateStatus}
+  onUpdatePriority={handleUpdatePriority} // Nova prop
+/>
+    </>
+  )
 }

@@ -2,24 +2,27 @@ import { useState } from "react";
 import styles from "./ServiceTable.module.css";
 import { Calendar, ChevronRight } from 'lucide-react';
 
-export default function ServiceTable({ orders }) {
+// Adicionada a prop onUpdatePriority
+export default function ServiceTable({ orders, onUpdateStatus, onUpdatePriority }) {
   
   const [openedStatusId, setOpenedStatusId] = useState(null);
+  const [openedPriorityId, setOpenedPriorityId] = useState(null); // Novo estado
 
-  // Helpers para classes dinâmicas
+  const priorities = ['Baixa', 'Média', 'Alta', 'Crítica']; // Lista de prioridades
+
   const getStatusClass = (status) => {
     switch (status) {
       case 'Pendente': return styles.statusPendente;
-        case 'Em Andamento': return styles.statusEmAndamento;
-        case 'Retirada': return styles.statusRetirada;
+      case 'Em Andamento': return styles.statusEmAndamento;
+      case 'Retirada': return styles.statusRetirada;
       default: return '';
     }
   };
-  const getOtherStatus = (currentStatus)=> {
-    const allStatus = ['Pendente','Em Andamento','Retirada']
-    return allStatus.filter( s => s !== currentStatus);
-  }
 
+  const getOtherStatus = (currentStatus) => {
+    const allStatus = ['Pendente', 'Em Andamento', 'Retirada'];
+    return allStatus.filter(s => s !== currentStatus);
+  }
 
   const getPriorityClass = (priority) => {
     switch (priority) {
@@ -31,9 +34,26 @@ export default function ServiceTable({ orders }) {
     }
   };
 
-  const toggleStatus = (id)=> {
-    setOpenedStatusId(prevId => prevId === id ? null : id)
+  const toggleStatus = (id) => {
+    setOpenedPriorityId(null); // Fecha o de prioridade se abrir o de status
+    setOpenedStatusId(prevId => prevId === id ? null : id);
   }
+
+  const togglePriority = (id) => {
+    setOpenedStatusId(null); // Fecha o de status se abrir o de prioridade
+    setOpenedPriorityId(prevId => prevId === id ? null : id);
+  }
+
+  const handleStatusChange = (orderId, newStatus) => {
+    if (onUpdateStatus) onUpdateStatus(orderId, newStatus);
+    setOpenedStatusId(null);
+  };
+
+  // Nova função para lidar com a mudança de prioridade
+  const handlePriorityChange = (orderId, newPriority) => {
+    if (onUpdatePriority) onUpdatePriority(orderId, newPriority);
+    setOpenedPriorityId(null);
+  };
 
   if (!orders || orders.length === 0) {
     return (
@@ -41,14 +61,6 @@ export default function ServiceTable({ orders }) {
         <h3 className={styles.title}>Nenhuma ordem encontrada</h3>
       </div>
     );
-  }
-
-  function handleStatusClick(id){
-    if(id === openedStatusId){
-      return 0;
-    }else {
-      return 1;
-    }
   }
 
   return (
@@ -67,8 +79,6 @@ export default function ServiceTable({ orders }) {
         <tbody>
           {orders.map((order) => (
             <tr key={order.id} className={styles.row}>
-              
-              {/* ID e Data */}
               <td className={styles.cell}>
                 <div className={styles.idText}>{order.id}</div>
                 <div className={styles.dateText}>
@@ -77,51 +87,68 @@ export default function ServiceTable({ orders }) {
                 </div>
               </td>
 
-              {/* Título e Descrição */}
               <td className={styles.cell}>
                 <div className={styles.title}>{order.title}</div>
                 <div className={styles.description}>{order.description}</div>
                 <span className={styles.categoryTag}>{order.category}</span>
               </td>
 
-              {/* Nome do CLiente */}
               <td className={styles.cell}>
-                <div className={styles.client}>
-                  {order.client}
-                </div>
+                <div className={styles.client}>{order.client}</div>
               </td>
 
-              {/* Prioridade */}
-              <td className={styles.cell}>
-                <span className={getPriorityClass(order.priority)}>
+              {/* Célula de Prioridade com Modal */}
+              <td className={`${styles.cell} ${styles.relativeCell}`}>
+                <span 
+                  onClick={() => togglePriority(order.id)} 
+                  className={`${styles.priorityBadge} ${getPriorityClass(order.priority)}`}
+                >
                   {order.priority}
                 </span>
+
+                {openedPriorityId === order.id && (
+                  <div className={styles.priorityModal}>
+                    {priorities.filter(p => p !== order.priority).map((p) => (
+                      <span 
+                        key={p} 
+                        onClick={() => handlePriorityChange(order.id, p)} 
+                        className={`${styles.priorityOption} ${getPriorityClass(p)}`}
+                      >
+                        {p}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </td>
 
-              {/* Status */}
-              <td className={styles.cell} >
-                <span onClick={(()=>toggleStatus(order.id))} className={`${styles.statusBadge} ${getStatusClass(order.status)}`}>
+              <td className={`${styles.cell} ${styles.relativeCell}`}>
+                <span 
+                  onClick={() => toggleStatus(order.id)} 
+                  className={`${styles.statusBadge} ${getStatusClass(order.status)}`}
+                >
                   {order.status}
                 </span>
-                <div hidden={handleStatusClick(order.id)}>
+
+                {openedStatusId === order.id && (
                   <div className={styles.statusModal}>
-                    {getOtherStatus(order.status).map((newStatus)=> (
-                      <span onClick={(()=>setOpenedStatusId(null))} key={newStatus} className={`${styles.statusBadge} ${getStatusClass(newStatus)}`}>
+                    {getOtherStatus(order.status).map((newStatus) => (
+                      <span 
+                        key={newStatus} 
+                        onClick={() => handleStatusChange(order.id, newStatus)} 
+                        className={`${styles.statusBadge} ${getStatusClass(newStatus)}`}
+                      >
                         {newStatus}
                       </span>
                     ))}
                   </div>
-                </div>
-                
+                )}
               </td>
 
-              {/* Ação */}
               <td className={styles.cell} style={{ textAlign: 'right' }}>
                 <button className={styles.actionButton}>
                   <ChevronRight size={20} />
                 </button>
               </td>
-
             </tr>
           ))}
         </tbody>
